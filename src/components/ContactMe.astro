@@ -1,0 +1,164 @@
+<section
+    id="contact"
+    class="max-w-xl mx-auto bg-card rounded-xl shadow-lg px-6 py-12 my-8"
+>
+    <p class="text-center mb-8 text-secondary">
+        ¿Tienes alguna pregunta o propuesta? ¡Envíame un mensaje!
+    </p>
+    
+    <!-- Formspree - Solo necesitas cambiar el action -->
+    <form
+        action="https://formspree.io/f/TU_ID_AQUI"
+        method="POST"
+        class="flex flex-col gap-5"
+        id="contact-form"
+    >
+        <!-- Campo oculto para el asunto personalizado -->
+        <input type="hidden" name="_subject" value="Nuevo mensaje desde tu sitio web" />
+        
+        <!-- Protección anti-spam -->
+        <input type="hidden" name="_captcha" value="false" />
+        
+        <!-- Redirección después del envío (opcional) -->
+        <input type="hidden" name="_next" value="https://tudominio.com/gracias" />
+        
+        <label class="flex flex-col font-medium text-base text-primary gap-2">
+            Nombre
+            <input
+                type="text"
+                name="name"
+                required
+                placeholder="Tu nombre"
+                class="px-4 py-3 border border-gray-300 rounded-md bg-input focus:outline-none focus:border-primary transition"
+            />
+        </label>
+        
+        <label class="flex flex-col font-medium text-base text-primary gap-2">
+            Asunto
+            <input
+                type="text"
+                name="subject"
+                required
+                placeholder="Asunto del mensaje"
+                class="px-4 py-3 border border-gray-300 rounded-md bg-input focus:outline-none focus:border-primary transition"
+            />
+        </label>
+        
+        <label class="flex flex-col font-medium text-base text-primary gap-2">
+            Correo electrónico
+            <input
+                type="email"
+                name="email"
+                required
+                placeholder="tu@email.com"
+                class="px-4 py-3 border border-gray-300 rounded-md bg-input focus:outline-none focus:border-primary transition"
+            />
+        </label>
+        
+        <label class="flex flex-col font-medium text-base text-primary gap-2">
+            Mensaje
+            <textarea
+                id="message"
+                name="message"
+                required
+                placeholder="Escribe tu mensaje aquí"
+                class="min-h-[3rem] px-4 py-3 border border-gray-300 rounded-md bg-input focus:outline-none focus:border-primary transition resize-none overflow-hidden w-full"
+            ></textarea>
+        </label>
+        
+        <!-- Honeypot para spam -->
+        <input type="text" name="_gotcha" style="display:none" />
+        
+        <button
+            type="submit"
+            id="submit-btn"
+            class="mx-auto px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition shadow-lg ring-2 ring-blue-300 hover:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+            <span id="btn-text">Enviar</span>
+            <span id="btn-loading" class="hidden">Enviando...</span>
+        </button>
+    </form>
+    
+    <!-- Mensajes de estado -->
+    <div id="form-status" class="mt-4 text-center hidden">
+        <div id="success-message" class="text-green-600 bg-green-50 p-3 rounded-md hidden">
+            ¡Mensaje enviado correctamente! Te responderé pronto.
+        </div>
+        <div id="error-message" class="text-red-600 bg-red-50 p-3 rounded-md hidden">
+            Hubo un error al enviar el mensaje. Inténtalo de nuevo.
+        </div>
+    </div>
+</section>
+
+<script>
+    if (typeof window !== "undefined") {
+        const textarea = document.getElementById("message");
+        const form = document.getElementById("contact-form");
+        const submitBtn = document.getElementById("submit-btn");
+        const btnText = document.getElementById("btn-text");
+        const btnLoading = document.getElementById("btn-loading");
+        const formStatus = document.getElementById("form-status");
+        const successMessage = document.getElementById("success-message");
+        const errorMessage = document.getElementById("error-message");
+
+        // Auto-resize del textarea
+        if (textarea) {
+            const autoResize = () => {
+                textarea.style.height = "auto";
+                textarea.style.height = textarea.scrollHeight + "px";
+            };
+
+            textarea.addEventListener("input", autoResize);
+            autoResize();
+        }
+
+        // Manejo del envío del formulario
+        if (form) {
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                
+                // Mostrar estado de carga
+                submitBtn.disabled = true;
+                btnText.classList.add("hidden");
+                btnLoading.classList.remove("hidden");
+                
+                // Ocultar mensajes anteriores
+                formStatus.classList.add("hidden");
+                successMessage.classList.add("hidden");
+                errorMessage.classList.add("hidden");
+
+                try {
+                    const formData = new FormData(form);
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Éxito
+                        formStatus.classList.remove("hidden");
+                        successMessage.classList.remove("hidden");
+                        form.reset();
+                        if (textarea) {
+                            textarea.style.height = "auto";
+                        }
+                    } else {
+                        throw new Error('Error en el envío');
+                    }
+                } catch (error) {
+                    // Error
+                    formStatus.classList.remove("hidden");
+                    errorMessage.classList.remove("hidden");
+                } finally {
+                    // Restaurar botón
+                    submitBtn.disabled = false;
+                    btnText.classList.remove("hidden");
+                    btnLoading.classList.add("hidden");
+                }
+            });
+        }
+    }
+</script>

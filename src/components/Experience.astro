@@ -1,0 +1,36 @@
+---
+import ExperienceItem from "./ExperienceItem.astro"
+const EXPERIENCE = [
+  {
+    date: "Abril 2025 - Presente",
+    title: "Depurador de datos",
+    company: "T&P Servicios Legales",
+    description:
+      "Actualmente, formo parte del equipo de T&P Servicios Legales, donde me encargo de depurar datos de clientes. Utilizo Python para automatizar procesos, lo que ha permitido optimizar tiempos y reducir errores manuales. Mi enfoque se centra en garantizar la precisión y eficiencia en la gestión de datos, contribuyendo al éxito del equipo.",
+  },
+  {
+    date: "Octubre 2024 - Diciembre 2024",
+    title: "Desarrollador de Software",
+    company: "Soluciones Globales JM",
+    description:
+      "Participé en la creación y mejora del proyecto utilizando la plataforma Pega. Me encargué de implementar integraciones para conectar sistemas y optimizar procesos, asegurando la funcionalidad y el cumplimiento de los requisitos del negocio. Trabajé de manera colaborativa dentro de un equipo ágil, aplicando la metodología Scrum para garantizar la entrega eficiente y de alta calidad de las soluciones tecnológicas en el tiempo establecido.",
+  },
+  {
+    date: "Junio 2024- Septiembre 2024",
+    title: "Pasante IT",
+    company: "Banco BHD",
+    description:
+      "Formé parte de un equipo colaborativo enfocado en el desarrollo de soluciones utilizando la plataforma Pega. Durante este período, recibí capacitación especializada de System Architect en Pega, lo que fortaleció mis habilidades en diseño y desarrollo de aplicaciones",
+  },
+]
+---
+
+<ol class="relative mt-16">
+  {
+    EXPERIENCE.map((experience) => (
+      <li class="">
+        <ExperienceItem {...experience} />
+      </li>
+    ))
+  }
+</ol>

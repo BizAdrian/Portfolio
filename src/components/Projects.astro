@@ -1,0 +1,111 @@
+---
+import GitHub from "./icons/GitHub.astro"
+import NextJS from "./icons/NextJS.astro"
+import Tailwind from "./icons/Tailwind.astro"
+import Link from "./icons/Link.astro"
+import LinkButton from "./LinkButton.astro"
+import VueJS from "./icons/VueJS.astro"
+import Laravel from "./icons/Laravel.astro"
+
+const TAGS = {
+  NEXT: {
+    name: "Next.js",
+    class: "bg-black text-white",
+    icon: NextJS,
+  },
+  TAILWIND: {
+    name: "Tailwind CSS",
+    class: "bg-[#003159] text-white",
+    icon: Tailwind,
+  },
+  VUE: {
+    name: "Vue.js",
+    class: "bg-[#42b883] text-white",
+    icon: VueJS,
+  },
+  LARAVEL: {
+    name: "Laravel",
+    class: "bg-[#FF2D20] text-white",
+    icon: Laravel,
+  },
+}
+const PROJECTS = [
+  {
+    title: "Pasangüino - pagina web de pasantías",
+    description:
+      "Una pagina web de pasantías que permite a los estudiantes encontrar oportunidades de pasantías y a las empresas publicar ofertas.",
+    link: "https://rd.pasanguino.com/",
+    github: "https://github.com/Pasanguino/PasantiasRD",
+    image: "/projects/pasanguino.png",
+    tags: [TAGS.VUE, TAGS.LARAVEL],
+  },
+  {
+    title: "Caribe Aventuras - turismo en la República Dominicana",
+    description:
+      "Una pagina web de turismo que ofrece información sobre actividades y lugares turísticos en la República Dominicana a traves de un itinerario.",
+    link: "https://caribeaventurasgrupo3.vercel.app/",
+    github: "https://github.com/BizAdrian/dominican-travel",
+    image: "/projects/CaribeAventuras.png",
+    tags: [TAGS.NEXT, TAGS.TAILWIND],
+  },
+]
+---
+
+<div class="flex flex-col gap-y-16">
+  {
+    PROJECTS.map(({ image, title, description, tags, link, github }) => (
+    <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+  <div class="w-full md:w-1/2 flex justify-center">
+  <div class="relative overflow-hidden rounded-xl shadow-xl">
+    <img
+      src={image}
+      alt={title}
+      loading="lazy"
+      class="object-contain max-w-full max-h-[500px] transition duration-500 group-hover:scale-105"
+    />
+  </div>
+</div>
+
+  <div class="w-full md:w-1/2 md:max-w-lg">
+    <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+      {title}
+    </h3>
+    <div class="flex flex-wrap mt-2">
+      <ul class="flex flex-row mb-2 gap-x-2">
+          {tags.map((tag) => (
+            <li>
+              <span
+                class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2 `}
+              >
+                <tag.icon class="size-4" />
+                {tag.name}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+      <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
+      <footer class="flex items-end justify-start mt-4 gap-x-4">
+          {github && (
+            <LinkButton href={github}>
+              <GitHub class="size-6" />
+              Code
+              
+            </LinkButton>
+          )}
+          {link && (
+            <LinkButton href={link}>
+              <Link class="size-4" />
+              Preview
+            </LinkButton>
+          )}
+        </footer>
+    </div>
+  </div>
+</article>
+    ))
+  }
+</div>
+
+
+

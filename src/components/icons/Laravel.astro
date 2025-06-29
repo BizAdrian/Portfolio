@@ -1,0 +1,29 @@
+<svg
+    {...Astro.props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="256"
+    height="256"
+    preserveAspectRatio="xMidYMid"
+    viewBox="0 0 256 256"
+>
+    <defs>
+        <linearGradient id="laravel-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF7A59"/>
+            <stop offset="100%" stop-color="#FF3C00"/>
+        </linearGradient>
+        <circle id="laravel-circle" cx="128" cy="128" r="128"></circle>
+    </defs>
+    <mask id="laravel-mask" fill="#fff">
+        <use xlink:href="#laravel-circle"></use>
+    </mask>
+    <g mask="url(#laravel-mask)">
+        <circle cx="128" cy="128" r="128" fill="url(#laravel-gradient)"/>
+        <g fill="#fff">
+            <path d="M61.5 156.5 41 146.5V110l20.5-10.5 20.5 10.5v36.5l-20.5 10zm-15.5-15.5 15.5 8 15.5-8v-16l-15.5-8-15.5 8v16z"/>
+            <path d="M61.5 99.5 41 89.5V53l20.5-10.5L82 53v36.5l-20.5 10zm-15.5-15.5 15.5 8 15.5-8v-16l-15.5-8-15.5 8v16z"/>
+            <path d="M194.5 156.5 174 146.5V110l20.5-10.5 20.5 10.5v36.5l-20.5 10zm-15.5-15.5 15.5 8 15.5-8v-16l-15.5-8-15.5 8v16z"/>
+            <path d="M128 212 61.5 176.5v-20l66.5 35.5 66.5-35.5v20L128 212z"/>
+            <path d="M128 176.5 61.5 141V121l66.5 35.5L194.5 121v20L128 176.5z"/>
+        </g>
+    </g>
+</svg>

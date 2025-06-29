@@ -1,0 +1,36 @@
+<svg
+    {...Astro.props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="256"
+    height="256"
+    preserveAspectRatio="xMidYMid"
+    viewBox="0 0 256 256"
+>
+    <defs>
+        <linearGradient id="vue-a" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#42d392"/>
+            <stop offset="100%" stop-color="#347474"/>
+        </linearGradient>
+        <linearGradient id="vue-b" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#35495e"/>
+            <stop offset="100%" stop-color="#263445"/>
+        </linearGradient>
+        <circle id="vue-c" cx="128" cy="128" r="128"></circle>
+    </defs>
+    <mask id="vue-mask" fill="#fff">
+        <use xlink:href="#vue-c"></use>
+    </mask>
+    <g mask="url(#vue-mask)">
+        <circle cx="128" cy="128" r="128" fill="#fff"/>
+        <g>
+            <path
+                fill="url(#vue-b)"
+                d="M204.8 76.8h-38.4L128 120.32 89.6 76.8H51.2l76.8 102.4z"
+            />
+            <path
+                fill="url(#vue-a)"
+                d="M51.2 76.8 128 179.2l76.8-102.4h-38.4L128 120.32 89.6 76.8z"
+            />
+        </g>
+    </g>
+</svg>
