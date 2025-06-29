@@ -92,73 +92,67 @@
 
 <script>
     if (typeof window !== "undefined") {
-        const textarea = document.getElementById("message");
-        const form = document.getElementById("contact-form");
-        const submitBtn = document.getElementById("submit-btn");
-        const btnText = document.getElementById("btn-text");
-        const btnLoading = document.getElementById("btn-loading");
-        const formStatus = document.getElementById("form-status");
-        const successMessage = document.getElementById("success-message");
-        const errorMessage = document.getElementById("error-message");
+  const textarea = document.getElementById("message") as HTMLTextAreaElement | null;
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement | null;
+  const btnText = document.getElementById("btn-text") as HTMLElement | null;
+  const btnLoading = document.getElementById("btn-loading") as HTMLElement | null;
+  const formStatus = document.getElementById("form-status") as HTMLElement | null;
+  const successMessage = document.getElementById("success-message") as HTMLElement | null;
+  const errorMessage = document.getElementById("error-message") as HTMLElement | null;
 
-        // Auto-resize del textarea
-        if (textarea) {
-            const autoResize = () => {
-                textarea.style.height = "auto";
-                textarea.style.height = textarea.scrollHeight + "px";
-            };
+  if (textarea) {
+    const autoResize = () => {
+      textarea.style.height = "auto";
+      textarea.style.height = textarea.scrollHeight + "px";
+    };
 
-            textarea.addEventListener("input", autoResize);
-            autoResize();
+    textarea.addEventListener("input", autoResize);
+    autoResize();
+  }
+
+  if (form && submitBtn && btnText && btnLoading && formStatus && successMessage && errorMessage) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      // Ahora TS sabe que submitBtn es un botón y tiene propiedad disabled
+      submitBtn.disabled = true;
+      btnText.classList.add("hidden");
+      btnLoading.classList.remove("hidden");
+
+      formStatus.classList.add("hidden");
+      successMessage.classList.add("hidden");
+      errorMessage.classList.add("hidden");
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (response.ok) {
+          formStatus.classList.remove("hidden");
+          successMessage.classList.remove("hidden");
+          form.reset(); // TS sabe que form es HTMLFormElement
+          if (textarea) {
+            textarea.style.height = "auto";
+          }
+        } else {
+          throw new Error("Error en el envío");
         }
-
-        // Manejo del envío del formulario
-        if (form) {
-            form.addEventListener("submit", async (e) => {
-                e.preventDefault();
-                
-                // Mostrar estado de carga
-                submitBtn.disabled = true;
-                btnText.classList.add("hidden");
-                btnLoading.classList.remove("hidden");
-                
-                // Ocultar mensajes anteriores
-                formStatus.classList.add("hidden");
-                successMessage.classList.add("hidden");
-                errorMessage.classList.add("hidden");
-
-                try {
-                    const formData = new FormData(form);
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        // Éxito
-                        formStatus.classList.remove("hidden");
-                        successMessage.classList.remove("hidden");
-                        form.reset();
-                        if (textarea) {
-                            textarea.style.height = "auto";
-                        }
-                    } else {
-                        throw new Error('Error en el envío');
-                    }
-                } catch (error) {
-                    // Error
-                    formStatus.classList.remove("hidden");
-                    errorMessage.classList.remove("hidden");
-                } finally {
-                    // Restaurar botón
-                    submitBtn.disabled = false;
-                    btnText.classList.remove("hidden");
-                    btnLoading.classList.add("hidden");
-                }
-            });
-        }
-    }
+      } catch (error) {
+        formStatus.classList.remove("hidden");
+        errorMessage.classList.remove("hidden");
+      } finally {
+        submitBtn.disabled = false;
+        btnText.classList.remove("hidden");
+        btnLoading.classList.add("hidden");
+      }
+    });
+  }
+}
 </script>
